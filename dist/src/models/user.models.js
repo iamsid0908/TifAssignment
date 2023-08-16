@@ -24,19 +24,25 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
+const validator = require("validator");
 const UserSchema = new mongoose_1.Schema({
     name: {
         type: String,
-        require: true
+        require: [true, "Please enter yr name"],
+        maxLength: [30, "cannot exid"],
+        minLength: [4, "more than 5 char"]
     },
     email: {
         type: String,
-        require: true,
+        require: [true, "please enter your email"],
         unique: true,
+        validate: [validator.isEmail, "please enter your email"]
     },
     password: {
         type: String,
-        require: true
+        require: [true, "please enter yr password"],
+        minLength: [8, "password should be more than 8 char"],
+        select: false
     },
     creatdAt: {
         type: Date,

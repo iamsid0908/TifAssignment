@@ -16,8 +16,8 @@ exports.addMember= async (req:Request,res:Response)=> {
             }
         })
 
-    } catch {
-        res.status(500).send("someting went wrong in creating member")
+    } catch(e:any) {
+        res.status(500).send({message: e.message})
     }
 }
 

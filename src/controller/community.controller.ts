@@ -17,8 +17,8 @@ exports.createCommunity = async(req:any,res:Response)=> {
                 data:community
             }
         })
-    } catch {
-        res.status(500).send("someting went wrong in creating community")
+    } catch(e:any) {
+        res.status(500).send({message:e.message})
     }
 }
 
@@ -41,8 +41,8 @@ exports.getAllCommunity = async(req:Request,res:Response)=> {
             },
             data:communities
         })
-    } catch {
-        res.status(500).json({ error: 'An error occurred while fetching communities' });
+    } catch(e:any) {
+        res.status(500).json({ error: e.message });
 
     }
 }
@@ -64,8 +64,8 @@ try {
         success:true,
         data:transformedData
       })
-    } catch {
-        res.status(500).send("something went wrong getting data")
+    } catch(e:any) {
+        res.status(500).send({message: e.message})
     }
 }
 
@@ -89,8 +89,8 @@ exports.getMyOwnCommunity = async(req:any,res:Response)=> {
         },
         data:community
     })
-    } catch {
-        res.status(500).json({ error: 'An error occurred while fetching my communities' });
+    } catch(e:any) {
+        res.status(500).json({ error: e.message });
 
     }
 }
@@ -122,8 +122,8 @@ exports.getMyJoinCommunity = async(req:any,res:Response)=> {
             },
             data:transformedData
           })
-    } catch {
-        res.status(500).json({ error: 'An error occurred while fetching membered community' });
+    } catch(e:any) {
+        res.status(500).json({ error: e.message });
 
     }
 }

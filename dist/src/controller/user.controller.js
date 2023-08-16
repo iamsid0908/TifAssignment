@@ -93,10 +93,10 @@ exports.userLogout = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             message: "logged out",
         });
     }
-    catch (_a) {
+    catch (e) {
         res.status(401).json({
             sucess: false,
-            message: "something went wrong",
+            message: e.message,
         });
     }
 });

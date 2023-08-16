@@ -33,7 +33,7 @@ exports.getAllRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         });
     }
     catch (e) {
-        res.status(500).json({ error: 'An error occurred while fetching roles' });
+        res.status(500).json({ error: e.message });
     }
 });
 exports.createRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,7 +46,7 @@ exports.createRoles = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             }
         });
     }
-    catch (_a) {
-        res.status(404).send({ message: "something error" });
+    catch (e) {
+        res.status(404).send({ message: e.message });
     }
 });

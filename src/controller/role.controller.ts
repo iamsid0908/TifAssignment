@@ -25,8 +25,8 @@ exports.getAllRoles = async(req:Request,res:Response)=> {
             role
         })
     }
-    catch(e){
-        res.status(500).json({ error: 'An error occurred while fetching roles' });
+    catch(e:any){
+        res.status(500).json({ error:e.message });
 
     }
 }
@@ -40,7 +40,7 @@ exports.createRoles = async(req:Request,res:Response)=> {
             data
         }
     })
-    }catch{
-        res.status(404).send({message:"something error"})
+    }catch(e:any){
+        res.status(404).send({message:e.message})
     }
 }

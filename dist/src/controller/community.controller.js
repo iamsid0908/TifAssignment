@@ -30,8 +30,8 @@ exports.createCommunity = (req, res) => __awaiter(void 0, void 0, void 0, functi
             }
         });
     }
-    catch (_a) {
-        res.status(500).send("someting went wrong in creating community");
+    catch (e) {
+        res.status(500).send({ message: e.message });
     }
 });
 exports.getAllCommunity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -52,8 +52,8 @@ exports.getAllCommunity = (req, res) => __awaiter(void 0, void 0, void 0, functi
             data: communities
         });
     }
-    catch (_b) {
-        res.status(500).json({ error: 'An error occurred while fetching communities' });
+    catch (e) {
+        res.status(500).json({ error: e.message });
     }
 });
 exports.getAllMembers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -73,8 +73,8 @@ exports.getAllMembers = (req, res) => __awaiter(void 0, void 0, void 0, function
             data: transformedData
         });
     }
-    catch (_c) {
-        res.status(500).send("something went wrong getting data");
+    catch (e) {
+        res.status(500).send({ message: e.message });
     }
 });
 exports.getMyOwnCommunity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -97,8 +97,8 @@ exports.getMyOwnCommunity = (req, res) => __awaiter(void 0, void 0, void 0, func
             data: community
         });
     }
-    catch (_d) {
-        res.status(500).json({ error: 'An error occurred while fetching my communities' });
+    catch (e) {
+        res.status(500).json({ error: e.message });
     }
 });
 exports.getMyJoinCommunity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -127,7 +127,7 @@ exports.getMyJoinCommunity = (req, res) => __awaiter(void 0, void 0, void 0, fun
             data: transformedData
         });
     }
-    catch (_e) {
-        res.status(500).json({ error: 'An error occurred while fetching membered community' });
+    catch (e) {
+        res.status(500).json({ error: e.message });
     }
 });

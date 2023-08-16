@@ -91,10 +91,10 @@ exports.userLogout = async(req:Request,res:Response)=> {
             message:"logged out",
         });
         
-    }catch {
+    }catch(e:any) {
         res.status(401).json({
             sucess:false,
-            message:"something went wrong",
+            message: e.message,
         });
     }
 }

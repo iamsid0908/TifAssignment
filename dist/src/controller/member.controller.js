@@ -28,8 +28,8 @@ exports.addMember = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             }
         });
     }
-    catch (_a) {
-        res.status(500).send("someting went wrong in creating member");
+    catch (e) {
+        res.status(500).send({ message: e.message });
     }
 });
 exports.deleteMember = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

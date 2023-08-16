@@ -11,7 +11,8 @@ export interface IRole extends Document {
 const RoleSchema:Schema=new Schema({
     name:{
         type:String,
-        required:true
+        required:true,
+        enum: ['comminity admin', 'community member'],
     },
     creatdAt:{
         type:Date,

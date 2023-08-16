@@ -27,7 +27,8 @@ const mongoose_1 = __importStar(require("mongoose"));
 const RoleSchema = new mongoose_1.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        enum: ['comminity admin', 'community member'],
     },
     creatdAt: {
         type: Date,
