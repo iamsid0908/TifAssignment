@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt= require("jsonwebtoken");
 require('dotenv').config()
 
-exports.addSignUp = async (req:Request,res:Response)=>{
+exports.addSignUp =  (req:Request,res:Response)=> {
     const user = new UserModel({
         name:req.body.name,
         email:req.body.email,
@@ -41,8 +41,8 @@ exports.addSignUp = async (req:Request,res:Response)=>{
 }
 
 // Signup function
-exports.addSignIn = async (req:Request,res:Response)=>{
-    try{
+exports.addSignIn = async (req:Request,res:Response)=> {
+    try {
     const {email,password}=req.body;
 
     const user=await UserModel.findOne({email:email})
@@ -58,7 +58,7 @@ exports.addSignIn = async (req:Request,res:Response)=>{
         const payload={
             id:user._id
         }
-        var accessToken=jwt.sign(payload,process.env.SECRET_KEY,{
+        var accessToken = jwt.sign(payload,process.env.SECRET_KEY,{
             expiresIn:86400
         });
         res.cookie('access_token', accessToken, {
@@ -73,15 +73,15 @@ exports.addSignIn = async (req:Request,res:Response)=>{
             data:user
             }
         });
-    }catch(e:any){
+    }catch(e:any) {
         return res.status(500).send({message:e.message});
     }
     
     
 }
 
-exports.userLogout = async(req:Request,res:Response)=>{
-    try{
+exports.userLogout = async(req:Request,res:Response)=> {
+    try {
         res.cookie("access_token",null,{
             expires:new Date(Date.now()),
             httpOnly:true,
@@ -91,7 +91,7 @@ exports.userLogout = async(req:Request,res:Response)=>{
             message:"logged out",
         });
         
-    }catch{
+    }catch {
         res.status(401).json({
             sucess:false,
             message:"something went wrong",
@@ -99,8 +99,8 @@ exports.userLogout = async(req:Request,res:Response)=>{
     }
 }
 
-exports.getUserDetails=async(req:any,res:Response)=>{
-    try{
+exports.getUserDetails = async(req:any,res:Response)=> {
+    try {
     const user=await UserModel.findById(req.user.id);
     res.status(200).json({
         sucess:true,
@@ -110,7 +110,5 @@ exports.getUserDetails=async(req:any,res:Response)=>{
     })
     }catch(err: any){
         return res.status(500).send({message:err.message});
-
     }
-
 }

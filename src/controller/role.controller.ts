@@ -1,7 +1,7 @@
 import RoleModels,{IRole} from "../models/role.models";
 import express, {Request, Response} from 'express';
 
-exports.getAllRoles = async(req:Request,res:Response)=>{
+exports.getAllRoles = async(req:Request,res:Response)=> {
     try{
 
         // we can take input from query as well
@@ -31,8 +31,8 @@ exports.getAllRoles = async(req:Request,res:Response)=>{
     }
 }
 
-exports.createRoles = async(req:Request,res:Response)=>{
-    try{
+exports.createRoles = async(req:Request,res:Response)=> {
+    try {
         const data=await RoleModels.create(req.body);
         res.status(201).json({
         success:true,

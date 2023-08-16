@@ -68,7 +68,6 @@ exports.getAllMembers = (req, res) => __awaiter(void 0, void 0, void 0, function
                 created_at: item.createdAt
             });
         })));
-        console.log(transformedData);
         res.status(200).json({
             success: true,
             data: transformedData
@@ -108,7 +107,6 @@ exports.getMyJoinCommunity = (req, res) => __awaiter(void 0, void 0, void 0, fun
         const limit = 10;
         const skip = (page - 1) * limit;
         const member = yield member_models_1.default.find({ user: req.user.id }).skip(skip).limit(limit);
-        ;
         const transformedData = yield Promise.all(member.map((item) => __awaiter(void 0, void 0, void 0, function* () {
             return ({
                 id: item._id.toString(),
@@ -117,7 +115,6 @@ exports.getMyJoinCommunity = (req, res) => __awaiter(void 0, void 0, void 0, fun
                 created_at: item.createdAt
             });
         })));
-        console.log(transformedData);
         res.status(200).json({
             success: true,
             content: {

@@ -16,7 +16,7 @@ const user_models_1 = __importDefault(require("../models/user.models"));
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
-exports.addSignUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+exports.addSignUp = (req, res) => {
     const user = new user_models_1.default({
         name: req.body.name,
         email: req.body.email,
@@ -47,7 +47,7 @@ exports.addSignUp = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         .catch((err) => {
         res.status(500).send({ message: err.message });
     });
-});
+};
 // Signup function
 exports.addSignIn = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

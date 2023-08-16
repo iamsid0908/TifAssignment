@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const RoleController = require("../controller/role.controller");
-module.exports = (app) => {
-    app.get("/v1/api/role", RoleController.getAllRoles);
-    app.post("/v1/api/role", RoleController.createRoles);
-};
+const express_1 = require("express");
+const roleRouter = (0, express_1.Router)();
+roleRouter.get("/role", RoleController.getAllRoles);
+roleRouter.post("/role", RoleController.createRoles);
+exports.default = roleRouter;

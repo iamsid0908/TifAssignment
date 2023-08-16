@@ -3,8 +3,8 @@ import CommunityModels,{ICommunity} from '../models/community.models';
 import memberModels from '../models/member.models';
 import { getCommunityInfo,getRoleInfo,getUserInfo } from '../../utils/helper';
 
-exports.createCommunity = async(req:any,res:Response)=>{
-    try{
+exports.createCommunity = async(req:any,res:Response)=> {
+    try {
         const community = new CommunityModels({
             name:req.body.name,
             slug:req.body.name,
@@ -17,18 +17,18 @@ exports.createCommunity = async(req:any,res:Response)=>{
                 data:community
             }
         })
-    }catch{
+    } catch {
         res.status(500).send("someting went wrong in creating community")
     }
 }
 
-exports.getAllCommunity = async(req:Request,res:Response)=>{
-    try{
+exports.getAllCommunity = async(req:Request,res:Response)=> {
+    try {
         const page =  1; // Get the page number from the query parameter
         const limit =  2; // Set a default limit or get the limit from the query parameter
 
         const skip = (page - 1) * limit;
-        const communities =await CommunityModels.find({}).skip(skip).limit(limit);
+        const communities = await CommunityModels.find({}).skip(skip).limit(limit);
 
         res.status(200).json({
             success:true,
@@ -41,14 +41,14 @@ exports.getAllCommunity = async(req:Request,res:Response)=>{
             },
             data:communities
         })
-    }catch{
+    } catch {
         res.status(500).json({ error: 'An error occurred while fetching communities' });
 
     }
 }
 
-exports.getAllMembers = async(req:Request,res:Response)=>{
-try{
+exports.getAllMembers = async(req:Request,res:Response)=> {
+try {
     const member =await memberModels.find({community:req.params.id});
 
     const transformedData = await Promise.all(
@@ -60,18 +60,17 @@ try{
           created_at: item.createdAt
         }))
       );
-      console.log(transformedData);
       res.status(200).json({
         success:true,
         data:transformedData
       })
-    }catch{
+    } catch {
         res.status(500).send("something went wrong getting data")
     }
 }
 
-exports.getMyOwnCommunity = async(req:any,res:Response)=>{
-    try{
+exports.getMyOwnCommunity = async(req:any,res:Response)=> {
+    try {
         // we can take these data from query as well
     const page =  1; 
     const limit =  10; 
@@ -90,21 +89,19 @@ exports.getMyOwnCommunity = async(req:any,res:Response)=>{
         },
         data:community
     })
-    }catch{
+    } catch {
         res.status(500).json({ error: 'An error occurred while fetching my communities' });
 
     }
 }
 
-
-exports.getMyJoinCommunity = async(req:any,res:Response)=>{
-    try{
-
+exports.getMyJoinCommunity = async(req:any,res:Response)=> {
+    try {
         const page =  1; 
         const limit =  10; 
         const skip = (page - 1) * limit;
 
-        const member = await memberModels.find({user:req.user.id}).skip(skip).limit(limit);;
+        const member = await memberModels.find({user:req.user.id}).skip(skip).limit(limit);
 
         const transformedData = await Promise.all(
             member.map( async (item)=>({
@@ -114,7 +111,6 @@ exports.getMyJoinCommunity = async(req:any,res:Response)=>{
                 created_at: item.createdAt
             }))
         )
-        console.log(transformedData);
         res.status(200).json({
             success:true,
             content:{
@@ -126,7 +122,7 @@ exports.getMyJoinCommunity = async(req:any,res:Response)=>{
             },
             data:transformedData
           })
-    }catch{
+    } catch {
         res.status(500).json({ error: 'An error occurred while fetching membered community' });
 
     }

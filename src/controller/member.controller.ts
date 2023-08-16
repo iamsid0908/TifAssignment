@@ -1,8 +1,8 @@
 import express, {Request, Response} from 'express';
 import MemberModels,{IMember} from '../models/member.models';
 
-exports.addMember= async (req:Request,res:Response)=>{
-    try{
+exports.addMember= async (req:Request,res:Response)=> {
+    try {
         const member= new MemberModels({
             community:req.body.community,
             user:req.body.user,
@@ -16,19 +16,19 @@ exports.addMember= async (req:Request,res:Response)=>{
             }
         })
 
-    }catch{
+    } catch {
         res.status(500).send("someting went wrong in creating member")
     }
 }
 
 exports.deleteMember = async (req:Request,res:Response) => {
-    try{
+    try {
         const member=await MemberModels.findByIdAndRemove(req.params.id)
         res.status(200).json({
             sucess:true,
            
         })
-    }catch(err:any){
+    }catch(err:any) {
         return res.status(400).json({
             sucess:false,
             message:err.message
