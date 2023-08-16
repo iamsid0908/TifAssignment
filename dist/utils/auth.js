@@ -13,8 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jwt = require("jsonwebtoken");
-const member_models_1 = __importDefault(require("../src/models/member.models"));
-const role_models_1 = __importDefault(require("../src/models/role.models"));
+const community_models_1 = __importDefault(require("../src/models/community.models"));
 const user_models_1 = __importDefault(require("../src/models/user.models"));
 require('dotenv').config();
 exports.isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
@@ -35,14 +34,14 @@ exports.isAuthenticated = (req, res, next) => __awaiter(void 0, void 0, void 0, 
 });
 exports.authorizedRoles = () => {
     return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(req.user.id);
         const userId = req.user.id;
-        const member = yield member_models_1.default.findOne({ user: userId });
-        console.log(member);
-        const roleId = member === null || member === void 0 ? void 0 : member.role;
-        const role = yield role_models_1.default.findById(roleId);
-        if ((role === null || role === void 0 ? void 0 : role.name) != "Community Admin") {
-            return next(res.status(403).send({ message: `role: ${role === null || role === void 0 ? void 0 : role.name} are not allowed` }));
+        console.log(userId);
+        const communityId = req.body.community;
+        const community = yield community_models_1.default.findById({ _id: communityId });
+        const ownerId = community === null || community === void 0 ? void 0 : community.owner.toHexString();
+        console.log(ownerId);
+        if (userId !== ownerId) {
+            return next(res.status(403).send({ message: `role: ${userId} are not allowed. you are not admin of this community` }));
         }
         next();
     });

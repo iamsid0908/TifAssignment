@@ -1,7 +1,8 @@
 import express, {Request, Response} from 'express';
 import MemberModels,{IMember} from '../models/member.models';
+import memberModels from '../models/member.models';
 
-exports.addMember= async (req:Request,res:Response)=> {
+  export const addMember= async (req:Request,res:Response)=> {
     try {
         const member= new MemberModels({
             community:req.body.community,
@@ -33,5 +34,17 @@ exports.deleteMember = async (req:Request,res:Response) => {
             sucess:false,
             message:err.message
         })
+    }
+}
+
+exports.getAllMembers = async(req:Request,res:Response)=>{
+    try{
+    const member =  await memberModels.find({})
+    res.status(200).json({
+        success:true,
+        member
+    })
+    }catch{
+
     }
 }

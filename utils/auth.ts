@@ -1,4 +1,5 @@
 const jwt=require("jsonwebtoken")
+import communityModels from '../src/models/community.models';
 import memberModels from '../src/models/member.models';
 import roleModels from '../src/models/role.models';
 import UserModel from '../src/models/user.models';
@@ -27,14 +28,15 @@ exports.isAuthenticated = async(req:any,res:Response,next:NextFunction)=>{
 
 exports.authorizedRoles=()=>{
     return async (req:any,res:Response,next:NextFunction)=>{
-        console.log(req.user.id);
         const userId=req.user.id;
-        const member = await memberModels.findOne({user:userId});
-        console.log(member)
-        const roleId = member?.role
-        const role=await roleModels.findById(roleId);
-        if(role?.name != "Community Admin"){
-            return next(res.status(403).send({message:`role: ${role?.name} are not allowed`}));
+        console.log(userId)
+        const communityId = req.body.community;
+        const community = await communityModels.findById({_id:communityId});
+        const ownerId = community?.owner.toHexString();   
+        console.log(ownerId)
+
+        if(userId !== ownerId){
+            return next(res.status(403).send({message:`role: ${userId} are not allowed. you are not admin of this community`}));
         }
         next();
     };

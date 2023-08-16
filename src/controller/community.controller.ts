@@ -2,6 +2,8 @@ import express, {Request, Response} from 'express';
 import CommunityModels,{ICommunity} from '../models/community.models';
 import memberModels from '../models/member.models';
 import { getCommunityInfo,getRoleInfo,getUserInfo } from '../../utils/helper';
+import MemberModels from '../models/member.models';
+
 
 exports.createCommunity = async(req:any,res:Response)=> {
     try {
@@ -10,7 +12,21 @@ exports.createCommunity = async(req:any,res:Response)=> {
             slug:req.body.name,
             owner:req.user.id
         })
+        //community Admin role id
+        const adminRoleId="64da7e63d6617f94080e58e7" 
         community.save();
+        console.log(community);
+
+        // adding owner as a community admin in member table
+        const member= new MemberModels({
+            community:community._id,
+            user:community.owner,
+            role:adminRoleId
+        })
+        member.save();
+
+        // await addMember(req, res, req.body.name, req.user.id);
+
         res.status(200).json({
             success:true,
             content:{
@@ -25,7 +41,7 @@ exports.createCommunity = async(req:any,res:Response)=> {
 exports.getAllCommunity = async(req:Request,res:Response)=> {
     try {
         const page =  1; // Get the page number from the query parameter
-        const limit =  2; // Set a default limit or get the limit from the query parameter
+        const limit =  10; // Set a default limit or get the limit from the query parameter
 
         const skip = (page - 1) * limit;
         const communities = await CommunityModels.find({}).skip(skip).limit(limit);
@@ -101,6 +117,7 @@ exports.getMyJoinCommunity = async(req:any,res:Response)=> {
         const limit =  10; 
         const skip = (page - 1) * limit;
 
+        // I am including both  community admin and community member
         const member = await memberModels.find({user:req.user.id}).skip(skip).limit(limit);
 
         const transformedData = await Promise.all(

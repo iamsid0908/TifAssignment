@@ -74,7 +74,7 @@ exports.addSignIn = async (req:Request,res:Response)=> {
             }
         });
     }catch(e:any) {
-        return res.status(500).send({message:e.message});
+        return res.status(500).send({message:"err"});
     }
     
     

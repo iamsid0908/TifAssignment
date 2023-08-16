@@ -79,7 +79,7 @@ exports.addSignIn = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         });
     }
     catch (e) {
-        return res.status(500).send({ message: e.message });
+        return res.status(500).send({ message: "err" });
     }
 });
 exports.userLogout = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

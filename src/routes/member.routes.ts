@@ -5,7 +5,8 @@ const {isAuthenticated,authorizedRoles} =require("../../utils/auth")
 const memberRouter = Router()
 
 
-memberRouter.post("/member",isAuthenticated,MemberController.addMember);
+memberRouter.get("/member",MemberController.getAllMembers);
+memberRouter.post("/member",isAuthenticated,authorizedRoles(), MemberController.addMember);
 memberRouter.delete("/member/:id",MemberController.deleteMember);
 
 export default memberRouter;

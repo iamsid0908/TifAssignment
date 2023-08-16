@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const community_models_1 = __importDefault(require("../models/community.models"));
 const member_models_1 = __importDefault(require("../models/member.models"));
 const helper_1 = require("../../utils/helper");
+const member_models_2 = __importDefault(require("../models/member.models"));
 exports.createCommunity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const community = new community_models_1.default({
@@ -22,7 +23,18 @@ exports.createCommunity = (req, res) => __awaiter(void 0, void 0, void 0, functi
             slug: req.body.name,
             owner: req.user.id
         });
+        //community Admin role id
+        const adminRoleId = "64da7e63d6617f94080e58e7";
         community.save();
+        console.log(community);
+        // adding owner as a community admin in member table
+        const member = new member_models_2.default({
+            community: community._id,
+            user: community.owner,
+            role: adminRoleId
+        });
+        member.save();
+        // await addMember(req, res, req.body.name, req.user.id);
         res.status(200).json({
             success: true,
             content: {
@@ -37,7 +49,7 @@ exports.createCommunity = (req, res) => __awaiter(void 0, void 0, void 0, functi
 exports.getAllCommunity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const page = 1; // Get the page number from the query parameter
-        const limit = 2; // Set a default limit or get the limit from the query parameter
+        const limit = 10; // Set a default limit or get the limit from the query parameter
         const skip = (page - 1) * limit;
         const communities = yield community_models_1.default.find({}).skip(skip).limit(limit);
         res.status(200).json({
@@ -106,6 +118,7 @@ exports.getMyJoinCommunity = (req, res) => __awaiter(void 0, void 0, void 0, fun
         const page = 1;
         const limit = 10;
         const skip = (page - 1) * limit;
+        // I am including both  community admin and community member
         const member = yield member_models_1.default.find({ user: req.user.id }).skip(skip).limit(limit);
         const transformedData = yield Promise.all(member.map((item) => __awaiter(void 0, void 0, void 0, function* () {
             return ({

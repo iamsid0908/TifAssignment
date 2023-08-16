@@ -12,8 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.addMember = void 0;
 const member_models_1 = __importDefault(require("../models/member.models"));
-exports.addMember = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const member_models_2 = __importDefault(require("../models/member.models"));
+const addMember = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const member = new member_models_1.default({
             community: req.body.community,
@@ -32,6 +34,7 @@ exports.addMember = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).send({ message: e.message });
     }
 });
+exports.addMember = addMember;
 exports.deleteMember = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const member = yield member_models_1.default.findByIdAndRemove(req.params.id);
@@ -44,5 +47,16 @@ exports.deleteMember = (req, res) => __awaiter(void 0, void 0, void 0, function*
             sucess: false,
             message: err.message
         });
+    }
+});
+exports.getAllMembers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const member = yield member_models_2.default.find({});
+        res.status(200).json({
+            success: true,
+            member
+        });
+    }
+    catch (_a) {
     }
 });
